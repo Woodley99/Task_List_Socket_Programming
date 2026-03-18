@@ -107,4 +107,9 @@ class TodoApp:
         )
         clear_button.pack(side="left", padx=5)
 
-    
+    def refresh_listbox(self):
+        self.task_listbox.delete(0, ctk.End)
+        for index, task in enumerate(self.tasks, start=1):
+            status = "✅" if task["done"] else "❌"
+            display_text = f"{index}.{task['task']} [{status}]"
+            self.tasl_listbox.insert(ctk.END, display_text)
