@@ -1,6 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
+
 from tkinter import messagebox
+from storage import load_tasks, save_tasks
 
 class TodoApp:
     def __init__(self, root):
@@ -14,8 +16,9 @@ class TodoApp:
         self.root.resizable(False, False)
         self.root.configure(text_color = "#f0f4f7")
 
-        self.tasks = []
+        self.tasks = load_tasks()
         self.setup_ui()
+        self.refresh_listbox()
         
     def setup_ui(self):
         title_label = ctk.CTkLabel(
@@ -122,6 +125,7 @@ class TodoApp:
             return
     
         self.tasks.append({"task" : task_text, "done" : False})
+        save_tasks(self.tasks)
         self.task_entry.delete(0, ctk.END)
         self.info_label.configure(text = f"Task '{task_text}' added!")
         self.refresh_listbox()
@@ -139,6 +143,7 @@ class TodoApp:
             return
         
         self.tasks[index]["done"] = True
+        save_tasks(self.tasks)
         self.info_label.configure(text = "Task marked as done!")
         self.refresh_listbox()
 
@@ -149,6 +154,7 @@ class TodoApp:
         
         removed = self.tasks.pop(index)
         self.info_label.configure(text = f"Deleted task: {removed['task']}")
+        save_tasks(self.tasks)
         self.refresh_listbox()
 
     def clear_all(self):
@@ -158,6 +164,7 @@ class TodoApp:
         
         if messagebox.askyesno("Clear all", "Are you sure you want to delete all tasks?"):
             self.tasks.clear()
+            save_tasks(self.tasks)
             self.refresh_listbox()
             self.info_label.configure(text = "All tasks cleared!")
 
