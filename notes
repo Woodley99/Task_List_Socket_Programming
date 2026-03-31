@@ -1,0 +1,32 @@
+will have to have user login so people know whos editing stuff, different colour -
+text for different users? and a username in the top right
+
+
+STEPS
+
+~~- move tasks from main_ui into its own task_manager.py~~
+~~- stuff like add task, delete, clear, mark done as these are not UI - done~~
+
+~~- refactor main_ui.py to make use of task_manager.py~~
+
+~~- test~~
+
+~~- refactored UI into seperate UI file, then use main.py to manage the app~~
+~~- created sign in UI and set it to open first~~
+- get main screen to work again
+
+- TODO - Sign in screen needs logic, need to store username and password
+- Display username on main_ui screen
+- 
+
+- start working on server/ server.py
+    The server will:
+
+    load tasks
+    receive commands
+    call task_manager.py
+    save with storage.py
+    return results
+
+- create client / 
+
