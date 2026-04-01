@@ -5,6 +5,7 @@ from storage import load_tasks
 from task_manager import TaskManager
 from UI.main_screen import MainScreen
 from UI.sign_in_ui import SignInScreen
+from UI.register_ui import RegisterScreen
 
 
 class TodoApp:
@@ -18,6 +19,7 @@ class TodoApp:
         ctk.set_default_color_theme("blue")
 
         # Root window configurations
+        self.current_user = None
         self.root = root
         self.root.title("To-Do List")
         self.root.geometry("500x450")
@@ -33,6 +35,7 @@ class TodoApp:
 
         # Create and store screen frames
         self.screens = {}
+        self.screens["register"] = RegisterScreen(self.root, self)
         self.screens["signin"] = SignInScreen(self.root, self)
         self.screens["main"] = MainScreen(self.root, self)
 
@@ -44,6 +47,10 @@ class TodoApp:
         Raise the appropriate screen based on the provided name.
         """
         self.screens[name].tkraise()
+
+        if name =="main":
+            self.screens["main"].update_user()
+
 
     def get_selected_index(self):
         """

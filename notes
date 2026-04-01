@@ -13,11 +13,14 @@ STEPS
 
 ~~- refactored UI into seperate UI file, then use main.py to manage the app~~
 ~~- created sign in UI and set it to open first~~
-- get main screen to work again
+~~- get main screen to work again~~
 
-- TODO - Sign in screen needs logic, need to store username and password
+~~- TODO - Sign in screen needs logic, need to store username and password~~
+~~- currently i have created test login and password,~~ ~~need to create a save function storing locally in ~~storage.py and retreving before login
 - Display username on main_ui screen
-- 
+- ~~register working locally~~
+
+- ~~sign up needs password visibility functions and user_storage linked~~
 
 - start working on server/ server.py
     The server will:

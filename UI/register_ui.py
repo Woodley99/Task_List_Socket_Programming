@@ -1,9 +1,8 @@
 import customtkinter as ctk
 
-from user_storage import login_user
+from user_storage import register_user_data
 
-
-class SignInScreen(ctk.CTkFrame):
+class RegisterScreen(ctk.CTkFrame):
     def __init__(self, master, app):
         super().__init__(master)
 
@@ -16,7 +15,7 @@ class SignInScreen(ctk.CTkFrame):
         # Title
         title = ctk.CTkLabel(
             self,
-            text="Sign In",
+            text="Register",
             font=("Helvetica", 22, "bold")
         )
         title.pack(pady=20)
@@ -63,26 +62,29 @@ class SignInScreen(ctk.CTkFrame):
         )
         self.message_label.pack(pady = 5)
 
-
         row_frame = ctk.CTkFrame(self, fg_color="transparent")
         row_frame.pack(pady=10)
-    
-        # Sign in button
-        Sign_up_button = ctk.CTkButton(
-            row_frame,
-            text="Sign In",
-            command=self.user_sign_in
-        )
-        Sign_up_button.pack(side="left", padx=10)
 
-        # register nav button
-        Register_nav_button = ctk.CTkButton(
+
+        # Sign in navigation button
+        SignIn_nav_button = ctk.CTkButton(
             row_frame,
-            text="Register?",
-            command=self.Register_nav
+            text="Sign In?",
+            command=self.SignIn_nav
         )
-        Register_nav_button.pack(side="left", padx=10)
+        SignIn_nav_button.pack(side="left", padx=10)
+
+        # register button
+        Register_button = ctk.CTkButton(
+            row_frame,
+            text="Register",
+            command=self.register_user
+        )
+        Register_button.pack(side="left", padx=10)
+
+
         
+
 
     def toggle_password_visibility(self):
         # get the current state of the password entry(wether its shown or hidden)
@@ -96,11 +98,10 @@ class SignInScreen(ctk.CTkFrame):
             self.toggle_button.configure(text="Show Password")
 
 
-    def user_sign_in(self):
+    def register_user(self):
 
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
-
 
         # validate input
         if not username or not password:
@@ -108,17 +109,13 @@ class SignInScreen(ctk.CTkFrame):
             return
         
         # call storage function
-        success = login_user(username, password)
+        success = register_user_data(username, password)
 
         if success:
-            self.app.current_user = username # store user
-            self.message_label.configure(text="Login Successful!", text_color="green")
-            self.app.show_screen("main")
-            self.app.refresh_listbox()
+            self.message_label.configure(text="Account created!", text_color="green")
         else:
-            self.message_label.configure(text="Invalid login details!", text_color="red")
+            self.message_label.configure(text="User already exists")
 
-    def Register_nav(self):
-            self.app.show_screen("register")
-        
-    
+
+    def SignIn_nav(self):
+        self.app.show_screen("signin")

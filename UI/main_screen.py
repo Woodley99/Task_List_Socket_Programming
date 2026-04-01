@@ -12,24 +12,46 @@ class MainScreen(ctk.CTkFrame):
         self.setup_ui()
 
     def setup_ui(self):
+
+        #create row object
+        row_frame = ctk.CTkFrame(self, fg_color="transparent")
+        row_frame.pack(fill="x", pady=10)
+
+        # 3 grids for spacing the labels
+        row_frame.grid_columnconfigure(0, weight=1, uniform="header")
+        row_frame.grid_columnconfigure(1, weight=1, uniform="header")
+        row_frame.grid_columnconfigure(2, weight=1, uniform="header")
+
         # Title
         title_label = ctk.CTkLabel(
-            self,
+            row_frame,
             text="To-Do List",
             font=("Helvetica", 22, "bold"),
-            text_color="#f0f4f7"
+            text_color="#f0f4f7",
+            fg_color="transparent"
         )
-        title_label.pack(pady=10)
+        title_label.grid(row=0, column=1) # in row
+
+        #username display
+        self.username_label = ctk.CTkLabel(
+            row_frame,
+            text=self.app.current_user if self.app.current_user else "",
+            font=("helvetica", 12, "bold"),
+            text_color="#f0f4f7",
+            fg_color="transparent"
+        )
+        self.username_label.grid(row=0, column=2, sticky="e", padx=10) # in row
 
         # Input area
-        input_frame = ctk.CTkFrame(self)
+        input_frame = ctk.CTkFrame(self, fg_color="transparent")
         input_frame.pack(pady=10)
 
         self.task_entry = ctk.CTkEntry(
             input_frame,
             font=("Helvetica", 12),
             width=200,
-            text_color="#f0f4f7"
+            text_color="#f0f4f7",
+            fg_color="transparent"
         )
         self.task_entry.pack(side="left", padx=(0, 10))
 
@@ -73,7 +95,7 @@ class MainScreen(ctk.CTkFrame):
         self.info_label.pack(pady=5)
 
         # Action buttons
-        button_frame = ctk.CTkFrame(self)
+        button_frame = ctk.CTkFrame(self, fg_color="transparent")
         button_frame.pack(pady=10)
 
         mark_done_button = ctk.CTkButton(
@@ -105,3 +127,8 @@ class MainScreen(ctk.CTkFrame):
             command=self.app.task_manager.clear_all
         )
         clear_button.pack(side="left", padx=5)
+
+
+
+    def update_user(self):
+        self.username_label.configure(text=self.app.current_user)
